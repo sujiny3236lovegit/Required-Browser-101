@@ -58,14 +58,8 @@
 
 ### 2.3 윈도우 사이즈 표기
 
+- window사이즈가 정말 유용하고 중요하게 쓰이므로 정확한 **차이점을** 알고 넘어가자.
 -
--
--
--
-
-:sparkles: 이번 챕터의 핵심 :sparkles:
-
-> `인라인 코드`
 
 ```javascript
 window.addEventListener("resize", () => {
@@ -110,6 +104,33 @@ updateTag();
 [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
 
 ---
+
+### 2.3 정말 중요한 브라우저 좌표
+
+- 브라우저의 좌표에 대해서 알아보자.
+- X축과 Y축에 대해 정확하게 짚고 넘어가야한다.
+- ![x축과 y축](/imgs/xy.png)
+- `Element.getBoundingClientRect`는 Element오브젝트 안에 들어있는 API, 즉 함수이다. `Element.-`에서의 Element는 브라우저 위에 올라가는 DOM에 들어있는 모든 요소들(이미태그, 텍스트태그 등)들을 의미한다.=> 따라서 모든 요소는 전부 getBoundingClientRect라는 함수를 가지고 있다.
+- => `Element.getBoundingClientRect`함수를 호출하면 요소의 사이즈, 위치 등 다양한 정보들을 얻는다.
+-
+- Client의 X, Y: 사용자가 보고 있는 페이지와는 상관없이 브라우저에서의 window창의 x,y의 위치가 얼마인지 전달된다.
+- Page의 X, Y: 반대로 브라우저(window)창 페이지 전체의 x,y가 전달된다.
+
+:sparkles: 이번 챕터의 핵심 :sparkles:
+
+> `Element.getBoundingClientRect`
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+[Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
+
+---
+
+javascript click page x y coordinates
 
 # Web APIs 이해의 시작
 
