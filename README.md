@@ -112,18 +112,23 @@ updateTag();
 - ![x축과 y축](/imgs/xy.png)
 - `Element.getBoundingClientRect`는 Element오브젝트 안에 들어있는 API, 즉 함수이다. `Element.-`에서의 Element는 브라우저 위에 올라가는 DOM에 들어있는 모든 요소들(이미태그, 텍스트태그 등)들을 의미한다.=> 따라서 모든 요소는 전부 getBoundingClientRect라는 함수를 가지고 있다.
 - => `Element.getBoundingClientRect`함수를 호출하면 요소의 사이즈, 위치 등 다양한 정보들을 얻는다.
--
 - Client의 X, Y: 사용자가 보고 있는 페이지와는 상관없이 브라우저에서의 window창의 x,y의 위치가 얼마인지 전달된다.
-- Page의 X, Y: 반대로 브라우저(window)창 페이지 전체의 x,y가 전달된다.
-
-:sparkles: 이번 챕터의 핵심 :sparkles:
-
-> `Element.getBoundingClientRect`
+- Page의 X, Y: 반대로 브라우저(window)창이 아닌 페이지 전체의 x,y가 전달된다.
+-
+- _검색이 곧 실력이 된다._
+- `javascript click page x y coordinates`
+- `Element.getBoundingClientRect`
 
 ```javascript
-function test() {
-  console.log("hello world!");
-}
+// click이 되면 필요한 정보들을 출력해보자.
+const special = document.querySelector(".special"); // special변수에 document.querySelector를 이용해 .special라고 지정한 class에(.spec2ial라는 요소를 special라는 변수에 지정해서 )
+special.addEventListener("click", (event) => {
+  //special변수에 이벤트 리스너를 추가할 것인데, click이 되면 등록한 함수((event))가 호출되도록. // 항상 이벤트에는 event라는 오브젝트가 전달됨
+  const rect = special.getBoundingClientRect(); //rect변수에 .special요소에서 getBoundingClientRect()함수를 호출해서 rect변수에 받아온다.
+  console.log(rect);
+  console.log(`client: ${event.clientX}, ${event.clientY}`); //event.clientX=> event에는 clientX가 있다.
+  console.log(`client: ${event.pageX}, ${event.pageY}`);
+});
 ```
 
 [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
