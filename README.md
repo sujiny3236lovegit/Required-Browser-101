@@ -101,8 +101,6 @@ window.addEventListener("resize", () => {
 updateTag();
 ```
 
-[Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
-
 ---
 
 ### 2.3 정말 중요한 브라우저 좌표
@@ -139,6 +137,56 @@ scrollInto.addEventListener("click", () => {});
 
 ---
 
+### 2.10 window load의 대비밀:kissing_closed_eyes:
+
+-**defer**를 쓰게되면 해당 js파일이 **먼저** 출력 된다.
+
+```html
+<script src="test.js" defer></script>
+```
+
+- defer > 'DOMContentLoaded' > load => 순으로 출력된다.
+- 즉, defer옵션을 사용하면 html이 전부 파싱되고, `contentLoaded` 이벤트가 발생하고, 그 다음에 페이지에 사용되는 이미지, 폰트같은 리소스들이 다운받아지면서 load가 호출되는 것이다.
+- (only document 즉, html만 다 완료가 되면 호출함
+- after resource (css나 images 같은 것들)가 완료가 되면 호출함)
+
+```html
+<head>
+  ...
+  <script src="test.js" defer></script>
+</head>
+<body>
+  <script>
+    //only document
+    window.addEventListenter("DOMContentLoaded", () => {
+      console.log("DOMContentLoaded");
+    });
+
+    // after resources(css, images)
+    window.addEventListener("load", () => {
+      console.log("load");
+    });
+  </script>
+</body>
+```
+
+- 그리고 페이지가 끝날때 호출되거나, unload될때 불려지는 것도 있다.
+- 즉, 사용자가 브라우저를 나갈때(해당 페이지를 나갈때)나 페이지가 unload되었을 때 호출되는 애들도 있다.
+
+```javascript
+// before unload
+window.addEventListener("beforeunload", () => {
+  console.log("beforeunload");
+});
+
+// resource is being unloaded
+window.addEventListener("unload", () => {
+  conosle.log("unload");
+});
+```
+
+---
+
 # Web APIs 이해의 시작
 
 ---
@@ -160,4 +208,4 @@ function test() {
 }
 ```
 
-## [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
+[Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
