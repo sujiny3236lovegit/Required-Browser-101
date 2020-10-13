@@ -115,9 +115,9 @@ updateTag();
 - Client의 X, Y: 사용자가 보고 있는 페이지와는 상관없이 브라우저에서의 window창의 x,y의 위치가 얼마인지 전달된다.
 - Page의 X, Y: 반대로 브라우저(window)창이 아닌 페이지 전체의 x,y가 전달된다.
 -
-- _검색이 곧 실력이 된다._
-- `javascript click page x y coordinates`
-- `Element.getBoundingClientRect`
+- **검색이 곧 실력이 된다.**
+- `mdn javascript click page x y coordinates`
+- `mdn Element.getBoundingClientRect`
 
 ```javascript
 // click이 되면 필요한 정보들을 출력해보자.
@@ -131,11 +131,13 @@ special.addEventListener("click", (event) => {
 });
 ```
 
-[Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
+```javascript
+scrollBy.addEventListener("click", () => {});
+scrollTo.addEventListener("click", () => {});
+scrollInto.addEventListener("click", () => {});
+```
 
 ---
-
-javascript click page x y coordinates
 
 # Web APIs 이해의 시작
 
