@@ -207,6 +207,50 @@ const tag = document.querySelector(".tag");
 - `javascript mouse move` 검색
 - window위에서 움직이는 좌표를 받아와야하기 때문에 `clientX`
 
+`transform:translate()` 지정 요소 X 또는 Y축으로 이동. translate는 요소를 지정한 위치로 X 또는 Y축만큼 이동 시킵니다.
+
+```css
+.target {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+```
+
+- id가 하나만 필요한 부분은 id를 넣어주자.
+
+```html
+<img src="img/carrot.png" alt="carrot" />
+<img src="img/carrot.png" alt="carrot" />
+<img id="rabbit" src="img/rabbit.png" alt="rabbit" />
+<img src="img/carrot.png" alt="carrot" />
+```
+
+- button과 img는 inline-block이므로 한줄에 여러개가 허용된다.
+- `text-align: center;`를 했음에도 중간에 오지 않는 것은 오른쪽에 margin이 존재하기 때문이므로 `margin: auto;`를 추가해준다.
+
+```css
+body {
+  background-color: green;
+  text-align: center;
+}
+img {
+  display: block;
+  margin: auto;
+}
+```
+
+- `mdn javascript`라고 검색해보면 `scrollIntoView`에 대해서 어떻게 사용할 것인지 찾아볼 수 있다.
+- `behavior`, `block`, `inline`등을 scrollIntoView의 옵션으로 사용할 수 있다.
+- API에 전달할 수 있는 인자들은 무엇이 있으며, 각각 전달했을 때 어떻게 다르게 행동하는지를 확인해가면서 사용하는 것이 중요하다.
+
+```javascript
+button.addEventListener("click", () => {
+  rabbit.scrollIntoView({ behavior: "smooth", block: "center" }); //rabit에 있는 것을 scrollIntoView를 이용해서 behavior라는 옵션을 사용할 것이다.
+});
+```
+
 ---
 
 # Web APIs 이해의 시작
