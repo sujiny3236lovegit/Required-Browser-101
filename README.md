@@ -187,6 +187,28 @@ window.addEventListener("unload", () => {
 
 ---
 
+### 3.1 실습4: 좌표찾아 007
+
+- 브라우저 창에서 마우스를 움직이면 **나를 따라다니는 좌표 출력하기**
+- 본격적으로 이벤트, DOM요소를 조작하는 법을 배우진 않았다.
+- 하지만 **검색도 실력**인 만큼 검색하면서 기존에 내가 만든 html태그들을 어떻게 변형할 수 있을지 창의적으로 생각해보자.
+- 1
+- 2.
+- 3.
+- 지정한 각각의 변수를 할당하자.
+
+```javascript
+const horizontal = document.querySelector(".horizontal");
+const vertical = document.querySelector(".vertical");
+const target = document.querySelector(".target");
+const tag = document.querySelector(".tag");
+```
+
+- `javascript mouse move` 검색
+- window위에서 움직이는 좌표를 받아와야하기 때문에 `clientX`
+
+---
+
 # Web APIs 이해의 시작
 
 ---
@@ -201,6 +223,22 @@ window.addEventListener("unload", () => {
 :sparkles: 이번 챕터의 핵심 :sparkles:
 
 > `인라인 코드`
+
+```html
+
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
 
 ```javascript
 function test() {
