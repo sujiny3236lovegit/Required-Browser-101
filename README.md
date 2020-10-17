@@ -268,8 +268,11 @@ button.addEventListener("click", () => {
 - Node 안에는 document나 Element같은 아이들이 포함되어 있다.
 - Node는 EventTarget을 상속한다.(=> 모든 node는 EventTarget이라고도 할 수있다.)
   ![Node](/imgs/node.png)
-
 - 모든 Node는 이벤트가 발생할 수도 있고, 이벤트를 들을 수도 있다. => 모든 Node가 EventTarget이기 때문이다.
+  ![EventTarget](/imgs/EventTarget.png)
+- 브라우저가 html파일을 읽었을 때 어떻게 이해해서 DOM요소로 변환하는지 알아봤다.
+- 모든 Node는 EventTarget이고 또, Node에선 html부터 시작해 다양한 요소들이 존재한다.
+- 조금 더 상세하게 **브라우저가 어떻게 렌더링하는지**에 대해 **CCSOM**에 대해 공부해보자.
 
   :sparkles: 이번 챕터의 핵심 :sparkles:
 
