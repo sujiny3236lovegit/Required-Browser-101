@@ -253,6 +253,58 @@ button.addEventListener("click", () => {
 
 ---
 
+# DOM 완전 정복
+
+---
+
+### 4.1 DOM 큰 그림 이해하기
+
+- 브라우저가 웹페이지나 웹애플리케이션을 어떻게 분석해서 정확한 위치에 표시를 하는지, 우리가 어떻게 DOM요소를 조작할 수 있는지에 대해서 배워보자.
+- 좀더 깊이 있게 브라우저가 렌더링하는 순서를 공부하면서 어떤 식으로 CSS를 사용해야 하며, 어떤 애니메이션이 브라우저 성능에 놓은지 나쁜지도 알아보자.
+  ![DOM Tree](/imgs/DOMtree.png)
+
+- **Node**
+- **DOM Node**라는 인터페이스는 우리가 DOM API를 쓰는데에 필수적인 인터페이스이다.
+- Node 안에는 document나 Element같은 아이들이 포함되어 있다.
+- Node는 EventTarget을 상속한다.(=> 모든 node는 EventTarget이라고도 할 수있다.)
+  ![Node](/imgs/node.png)
+
+- 모든 Node는 이벤트가 발생할 수도 있고, 이벤트를 들을 수도 있다. => 모든 Node가 EventTarget이기 때문이다.
+
+  :sparkles: 이번 챕터의 핵심 :sparkles:
+
+> `인라인 코드`
+
+```html
+
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+[DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction "DOM")
+[HTML_DOM API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API "HTML_DOM_API")
+[Node](https://developer.mozilla.org/en-US/docs/Web/API/Node "Node")
+[EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget "EventTarget")
+[HTML_DOM API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API "HTML_DOM_API")
+
+https://developer.mozilla.org/en-US/docs/Web/API/Node
+
 # Web APIs 이해의 시작
 
 ---
