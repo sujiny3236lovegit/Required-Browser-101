@@ -308,6 +308,43 @@ function test() {
 
 https://developer.mozilla.org/en-US/docs/Web/API/Node
 
+---
+
+### 4.4 알면 유용한 CCSOM
+
+- CCSOM: CSS Object Model
+-
+-
+-
+
+:sparkles: 이번 챕터의 핵심 :sparkles:
+
+> `인라인 코드`
+
+```html
+
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+## [CSSOM](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model "CSSOM")
+
 # Web APIs 이해의 시작
 
 ---
