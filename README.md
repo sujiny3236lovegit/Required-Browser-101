@@ -307,8 +307,58 @@ button.addEventListener("click", () => {
 > 3. DOM과 CSSOM을 합쳐 최종적으로 브라우저에 표기될 애들만 Render Tree에 선별되어져 표기되는것.
 >    (=> Render Tree는 html 부분은 표기되지 않고 body부분처럼 사용자입장에서 눈에 보일 요소들만 선별되어진다. 또한 body에 들어간다고 다 선별되어 표기되는 것은 아니며, display: none과 같은 것은 선별되지 않는다. (opacity: 0과 같은것은 눈에 보이지 않더라도 선별되어진다.))
 
-- ![RenderTree](/imgs/rendertree.png)
+![RenderTree](/imgs/rendertree.png)
+
+[CSSOM](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model "CSSOM")
+
+---
+
+### 4.5 성능을 좌우하는 Rendering 순서(중요:star:)
+
+- 웹페이지, 웹어플리케이션을 브라우저가 사용자에게 어떠한 과정을 거쳐 보여주게 되는지 알아보자.(이 것을 알아야 후에 성능 좋은 웹어플리케이션을 만들 수 있다.)
+- 후에 JS프레임워크나 라이브러리, CSS전처리기, CSS나 JS로 애니메이션 기능넣기 등을 할때 이것들을 알아놓아야 **성능좋은 웹페이지**를 만들 수 있다.
+
+:sparkles: 브라우저에서 URL을 입력하게 되면 이런 순서로 진행하게 된다. :sparkles:
+![RenderTree](/imgs/rendering.png)
+
+> 1. requests: 먼저 브라우저가 서버에게 html파일을 요청하게 되고,
+> 2. response: 서버에게서 html파일을 받아와서
+> 3. loading: 로딩하게 된다.
+> 4. scripting: 로딩한 데이터를 한줄 한줄 읽어서 DOM요소로 변환하게 된다.
+> 5. rendering: DOM요소로 변환하고 CSSOM으로 변환하는 등을 통해 브라우저 Window에 표기하기 위해 Rendering tree를 만든 다음,
+> 6. layout: 각각의 요소들이 어떤 위치에, 어떤 크기로 표기될 것인지 계산한 다음
+> 7. painting: 그림을 그리는 스탭으로 진행하게 된다.
+
+:sparkles: Construction, Operation(1) :sparkles:
+![RenderTree](/imgs/rendering2.png.png)
+
+> 더 자세하게 Construction, Operation 카테고리로 나눠서 알아보자.
+> Construction파트: html페이지에서 브라우저가 이해할 수 있게 브라우저의 언어로 바꾸는 파트로, 앞서 살펴본 DOM요소로 변환하고 CSSOM을 만들어 Render Tree를 최종적으로 만들어내는 것까지의 과정.
+> Operation파트: 브라우저가 이해할 수 있는 Rendering tree를 이용해 구조작성, 배치 계산 등으로 브라우저 window에 그림을 그려주는 rendering하게 되는 파트로, layout, painting, composition을 통해 최종적으로 사용자에게 내용이 보여지게 되는 과정.
+
+:sparkles: Construction, Operation(2) :sparkles:
+
+> Construction, Operation 각각의 과정에서 중요한 포인트를 한가지씩 짚어보자.
+>
+> 1. construction time에서 DOM에서 html페이지에서 rendering tree를 만들때까지 빠르게 하기 위해선 어떻게 해야할까?
+>    => 당연히 DOM요소가 작으면 작을수록, 혹은 CSS규칙이 적으면 적을수록 tree 또한 작아지므로 빠르게 할 수 있을것이다. div태그, wrapping클래스, wrapping요소들을 불필요할 정도로 남발하거나 하지말고 최대한 요소들을 적게 만드는 것이 중요하다.
+> 2. operation time에서는 처음 사용자에게 표기하는 것도 중요하지만 나중에 사용자가 클릭해서 요소를 움직이거나 애니메이션을 사용할 때 paint가 자주 일어나지 않도록 만드는 것이 중요하다.
+>    => 무슨 말이냐, 사용자가 클릭등을 통해 변화를 줄때, 브라우저가 부분적인 레이아웃을 composition(구성) 변화되게 해야하는데 변화가 일어날때마다 전체레이아웃이 변화된다면 브라우저의 성능은 나빠질 수 밖에 없다.
+
+---
+
+---
+
+### 2.2 리액트 컨셉과 구현 사항
+
 -
+-
+-
+-
+
+:sparkles: 이번 챕터의 핵심 :sparkles:
+
+>
 
 ```html
 
@@ -332,7 +382,7 @@ function test() {
 }
 ```
 
-[CSSOM](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model "CSSOM")
+[Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
 
 # Web APIs 이해의 시작
 
