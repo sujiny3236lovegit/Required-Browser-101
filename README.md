@@ -274,52 +274,41 @@ button.addEventListener("click", () => {
 - 모든 Node는 EventTarget이고 또, Node에선 html부터 시작해 다양한 요소들이 존재한다.
 - 조금 더 상세하게 **브라우저가 어떻게 렌더링하는지**에 대해 **CCSOM**에 대해 공부해보자.
 
-  :sparkles: 이번 챕터의 핵심 :sparkles:
-
-> `인라인 코드`
-
-```html
-
-```
-
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
 [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction "DOM")
 [HTML_DOM API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API "HTML_DOM_API")
 [Node](https://developer.mozilla.org/en-US/docs/Web/API/Node "Node")
 [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget "EventTarget")
 [HTML_DOM API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API "HTML_DOM_API")
 
-https://developer.mozilla.org/en-US/docs/Web/API/Node
-
 ---
 
 ### 4.4 알면 유용한 CCSOM
 
 - CCSOM: CSS Object Model
--
--
--
+- 브라우저에서 html파일을 분석하게 되면 html의 요소들은 DOM으로 변환된다.
+- 그렇다면 내가 정의한 CSS 스타일은 어디로 가는 것일까?
+- **브라우저가 CSS스타일을 어떻게 이해하는지**에 대해서 알아보자. => **CSSOM**에 대해 알아보자.
+  ![CSSOM](/imgs/cssom.png)
 
 :sparkles: 이번 챕터의 핵심 :sparkles:
 
-> `인라인 코드`
+> 브라우저가 html파일로 Document Object Model을 만들어 내가 정의한 CSS를 병합해서 CSSOM을 만든다.
+
+- 브라우저는 기본적인 CSS 스타일을 가지고 있지 않나?
+- "맞다." 브라우저는 기본적인 CSS스타일을 가지고 있다.
+- => 즉, 브라우저는 DOM과 CSS 요소들을 병합해서 CSS DOM이라는 것(CSSOM)을 만들어내는 것이다.
+
+:sparkles: 핵심 키워드 :sparkles:
+
+> Render Tree
+>
+> 1. 브라우저가 html파일을 읽게 되면 가장 먼저 DOM트리를 만들게 되고
+> 2. 그 다음 CSS파일을 읽은 후 최종적으로 확정된 CSS스타일의 Tree를 만든다. => CSSOM
+> 3. DOM과 CSSOM을 합쳐 최종적으로 브라우저에 표기될 애들만 Render Tree에 선별되어져 표기되는것.
+>    (=> Render Tree는 html 부분은 표기되지 않고 body부분처럼 사용자입장에서 눈에 보일 요소들만 선별되어진다. 또한 body에 들어간다고 다 선별되어 표기되는 것은 아니며, display: none과 같은 것은 선별되지 않는다. (opacity: 0과 같은것은 눈에 보이지 않더라도 선별되어진다.))
+
+- ![RenderTree](/imgs/rendertree.png)
+-
 
 ```html
 
@@ -343,7 +332,7 @@ function test() {
 }
 ```
 
-## [CSSOM](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model "CSSOM")
+[CSSOM](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model "CSSOM")
 
 # Web APIs 이해의 시작
 
@@ -358,7 +347,7 @@ function test() {
 
 :sparkles: 이번 챕터의 핵심 :sparkles:
 
-> `인라인 코드`
+>
 
 ```html
 
