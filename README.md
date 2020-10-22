@@ -405,8 +405,44 @@ button.addEventListener("click", () => {
 - 반대로 width와 height같은 너비와 높이는 layout을 발생시킨다. 요소의 너비를 변경하기 때문에 layout이 처음부터 다시 시작된다.
 - z-index는 layout은 상관없이 위치나 크기는 그대로인 상태에서 위아래로 위치만 변동되므로 paint만 발생하는 것을 볼 수 있다.
   > 이렇게 내가 어떤 것을 쓰면 최악인지 좋은지를 확인해가면서 사용하는 것이 중요하다.
+  > layout부터 발생할 수 있는 top, left 혹은 width, height와 같은 css의 속성값을 이용해 애니메이션을 하는 것은 좋지 않다는 것을 염두해두자.
 
 ---
+
+###
+
+-
+-
+-
+- ![RenderTree](/imgs/rendering.png)
+
+:sparkles: 이번 챕터의 핵심 :sparkles:
+
+>
+
+```html
+
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+## [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
 
 # Web APIs 이해의 시작
 
