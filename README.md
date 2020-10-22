@@ -330,7 +330,7 @@ button.addEventListener("click", () => {
 > 7. painting: 그림을 그리는 스탭으로 진행하게 된다.
 
 :sparkles: Construction, Operation(1) :sparkles:
-![RenderTree](/imgs/rendering2.png.png)
+![RenderTree](/imgs/rendering2.png)
 
 > 더 자세하게 Construction, Operation 카테고리로 나눠서 알아보자.
 > Construction파트: html페이지에서 브라우저가 이해할 수 있게 브라우저의 언어로 바꾸는 파트로, 앞서 살펴본 DOM요소로 변환하고 CSSOM을 만들어 Render Tree를 최종적으로 만들어내는 것까지의 과정.
@@ -347,42 +347,66 @@ button.addEventListener("click", () => {
 
 ---
 
+### 4.6 모르면 후회하는 '레이어 데모':ghost:
+
+- 브라우저가 **어떻게 html을 서버에서 받아**오고, **어떻게 이해**해서, 최종적으로 **사용자에게 보여지기까지 어떠한 과정을 거치**는지(layout, paint, composition)를 알아보았었다.
+- 이제 :sparkles:**브라우저가 어떻게 layers를 만들었는지 확인할 수 있는 꿀팁**:sparkles:을 얻어보자.
+  ![Layers](/imgs/layers.png)
+- 개발툴 > 땡땡땡옵션 > More tools > Layers
+- 를 해보면 우리의 Layers를 확인해볼 수 있다.
+
+![Layers](/imgs/layers2.png)
+
+- 지금 layer는 document자체 레이어와 스크롤바, 이렇게 두가지 레이어가 있음을 확인할 수 있다.
+- 이미지나 다른 것들이 한개의 레이어에 있다면 브라우저는 변동이 있을때마다 **레이어 전체를 업데이트**하게 된다.
+- 그렇게 되면 자그마한 부분이 변화되어도 결국 전체레이어를 다시 그려야하는 일이 발생할 수 있게 된다.
+- 브라우저가 레이어의 변동가능성을 인지해, 따로 레이어를 빼놓게 하려면 보통 'will-change'같은 것을 사용한다.
+
+![Layers](/imgs/layers3.png)
+
+- 이렇게 opacity가 변경될것이라고 알려주는 순간, 작은 레이어가 만들어지면서 해당 레이어 부분만 변경되도록 브라우저의 성능을 개선하게 되는 것.
+  > 그렇다면, 우리가 rendering path에 대해서도 알아봤고, 애니메이션 쓸 때 조심해서 사용해야한다는 것을 알게됐다. 그러면 어떤것은 쓰면 좋고 어떤것은 쓰면 최악이라는 것일까?
+  > CSS의 속성값을 확인할 수 있는 방법을 알아보자.
+
+[csstriggers](http://csstriggers.com/ "csstriggers")
+
+- csstriggers.com은 프론트엔드에서 개발할 때마다 이 사이트를 참고해서, 내가 사용하는 css 속성값이 좋은지 안좋은지 확인하기에 너무 좋다.:star:
+- 왜 이 사이트가 필요한 것일까?
+- 내가 막 CSS를 쓸때는 괜찮다. 하지만 나중에 애니메이션 transition을 이용할 때, 어떤 속성값과 어떤 css를 사용하느냐에 따라 layout이 발생할 수도, paint가 발생할 수도, 더 좋게 composition만 발생할 수도 있기 때문이다.
+
+:sparkles: layout, paint, composition 복습 :sparkles:
+
+> composition: css가 변경되었을 때 composition만 일어난다면 가장 좋은 케이스이다. 이유는 '이미 그려져있는 레이어를 움직이거나 변형만 하면 되기때문'이다.
+> paint: 작은 레이어든, 큰 레이어든 paint를 다시 준비해야하기 때문에 시간이 걸리고 메모리에도 부담이 된다.
+> layout: 가장 최악의 경우인 layout은 처음부터 Render Tree를 계산해서 어느 x와 y, width와 height을 사용할 것인지를 계산한 후, 다시 paint와 composition까지 가야하므로 가장 좋지 않은 케이스이다.
+
+![csstriggers](/imgs/csstriggers.png)
+
+> Blink: 크롬 브라우저에서 사용되는 엔진
+> Gecko: 파이어폭스에서 사용되는 엔진
+> Webkit: iOS 사파리에서 사용되는 엔진
+> EdgeHTML: 엣지브라우저에서 사용되는 엔진(이제 최신 엣지브라우저는 크롬의 엔진(Blink)을 사용하기에 EdgeHTML엔진은 오래된 엣지브라우저에서 쓰이고 있다.)
+
+![csstriggers](/imgs/csstriggers2.png)
+
+- Change from default: css에서 처음에 발생하는 것
+- Subsequent updates: 주기적으로 업데이트 되어 발생하는 것
+- 예를 들어 몇가지를 살펴보자.
+
+![csstriggers](/imgs/csstriggers3.png)
+
+- opacity를 보게 되면 layout은 발생하지 않고 paint와 composite만 발생하는 것을 볼 수 있다.
+- 후에 주기적인 업데이트가 발생하면 paint는 일어나지 않고 composite만 발생하는것을 볼 수 있다.
+- 즉, 크롬브라우저에서는 아주 괜찮은데 사파리와 EdgeHTML은 정말 개선이 많이 필요할 것으로 보인다.
+- 그러나 요즘 흔히 크로미움(크롬)을 사용하기 때문에 composite만 발생하는 것으로 나오는 opacity는 굉장히 괜찮은 속성이다.
+
+![csstriggers](/imgs/csstriggers4.png)
+
+- 반대로 width와 height같은 너비와 높이는 layout을 발생시킨다. 요소의 너비를 변경하기 때문에 layout이 처음부터 다시 시작된다.
+- z-index는 layout은 상관없이 위치나 크기는 그대로인 상태에서 위아래로 위치만 변동되므로 paint만 발생하는 것을 볼 수 있다.
+  > 이렇게 내가 어떤 것을 쓰면 최악인지 좋은지를 확인해가면서 사용하는 것이 중요하다.
+
 ---
-
-### 2.2 리액트 컨셉과 구현 사항
-
--
--
--
--
-
-:sparkles: 이번 챕터의 핵심 :sparkles:
-
->
-
-```html
-
-```
-
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
-[Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
 
 # Web APIs 이해의 시작
 
@@ -393,7 +417,7 @@ function test() {
 -
 -
 -
--
+- ![RenderTree](/imgs/rendering.png)
 
 :sparkles: 이번 챕터의 핵심 :sparkles:
 
