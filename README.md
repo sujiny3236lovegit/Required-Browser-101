@@ -409,40 +409,93 @@ button.addEventListener("click", () => {
 
 ---
 
-###
+### 4.9 성능 개선 증거:hammer:
 
--
--
--
-- ![RenderTree](/imgs/rendering.png)
+- 그런데 정말 성능이 좋은지 않좋은지 어떻게 알 수 있을까?
+  ![RenderTree](/imgs/Improving.png)
+- 왼쪽 코드는 left와 top을 이용해 요소들의 위치를 변경한 것
+- 오른쪽 코드는 transform을 이용해 위치를 바꾼 것
+- 결과의 차이점이 육안으로는 크게 보이지 않는다. **개발자 툴**을 이용하면 차이점을 똑똑하게 분석할 수 있다.
 
-:sparkles: 이번 챕터의 핵심 :sparkles:
+  ![RenderTree](/imgs/Improving2.png)
 
->
+- 개발툴 > performance > record 버튼 클릭 > stop 클릭 => record를 통해 내가 알고 싶은 동작들을 시행하면 내가 시행한 동작들이 녹화되면서 프로파일링을 하게 된다.
+  ![RenderTree](/imgs/Improving3.png)
 
-```html
+---
 
-```
+### 4.10 DOM 조작(1) - querySeletor
 
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
+- **DOM요소**에서 모든 **Element는 Node**이고 **Node는 EventTarget**이다.
+- 그래서 Element라는 오브젝트를 리턴하는데, 만약 Element를 찾지 못하면 null을 리턴한다.
+- `querySelector`는 Edge 12, Explore 8버전부터 지원한다.(이하 버전은 바벨을 사용하거나 `getElementById`를 사용)
+- `querySelector`가 **더 막강하고 폭넓게 사용가능**하다.
 
 ```javascript
-function test() {
-  console.log("hello world!");
-}
+const element = document.querySelector('img[src="img/avatar.png"]'); //image안에 document에 있는 querySlector를 이용해, img폴더안의 avatar이미지파일'만' 가져오겠다.
+
+const element2 = document.querySelector("img"); //가장 처음 발견된 img만 가져온다.
 ```
 
-## [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
+- `querySelectorAll` => 선택된 태그 전부를 가져오겠다.
+
+```javascript
+const images = document.querySelectorAll("img"); //img 태그 전부를 가져온다.
+```
+
+> :sparkles: querySelector에는 querySelector과 querySeletorAll이 있다. :sparkles:
+
+---
+
+### 4.10 DOM 조작(2) - createElement, setAttribute, insertBefore
+
+- `createElement`를 이용해 **요소 추가**하기
+- `setAttribute`를 이용해 **id, class, alt와 같은 속성**들을 전달할 수 있다.
+
+```javascript
+const section = document.querySelector("section"); //querySelector를 이용해 section을 전체적으로 받아오도록 한다.
+const h2 = document.createElement("h2"); //그리고 이 section에 h2를 추가한다.
+h2.setAttribute("class", "title"); // <h2 class="title"></h2>
+h2.textContent = "This is a title"; // <h2 class="title">This is a title</h2>
+//여기까지 만들었으니 h2를 section에 추가해야한다.
+```
+
+- `ParentNode.append` => 새로운 **자식노드를 추가**할때 사용한다.
+- `append`와 `appendChild`의 차이점에 대해 알아보자.
+- append: string같은 것을 추가해주고 리턴되는 value가 없다. (최근에 추가된 API라 익스플로러에선 지원X)
+- appendChild: 새로 추가된 자식 노드 자체를 리턴한다.
+- 비록 차이점이 있지만 쉽게 생각해서 호환성을 고려한다면 appendChild를 사용하거나 append를 사용해 바벨을 사용한다.
+
+```javascript
+const section = document.querySelector("section");
+const h2 = document.createElement("h2");
+h2.setAttribute("class", "title");
+h2.textContent = "This is a title";
+section.appendChild(h2);
+```
+
+- `appendChild`라는 API를 사용하면 **컨테이너 안에서 가장 끝부분**에 추가시키게 되는 것이다.
+- 그렇다면, 컨테이너의 제일 끝부분에 추가시키는 것이 아니라, **특정 부분** 혹은 **중간 부분**에 추가하려면 어떻게 해야할까?
+- `parentNode.insertBefore`를 사용하면 원하는 특정 부분에 동적으로 요소를 추가할 수 있다.
+
+```javascript
+let insertedNode = parentNode.insertBefore(newNode, referenceNode);
+```
+
+- 한번 적용해보자.
+
+```javascript
+const section = document.querySelector("section");
+const h2 = document.createElement("h2");
+h2.setAttribute("class", "title");
+h2.textContent = "This is a title";
+const h3 = document.querySelector("h3"); //DOM요소로 받아오기 위해 h3을 작성해준다.
+section.insertBefore(h2, h3);
+```
+
+---
+
+---
 
 # Web APIs 이해의 시작
 
