@@ -495,26 +495,54 @@ section.insertBefore(h2, h3);
 
 ---
 
----
-
-# Web APIs 이해의 시작
+# Events
 
 ---
 
-### 2.2 리액트 컨셉과 구현 사항
+### 6.1 Events
+
+- 브라우저에서 이벤트는 여기저기서 발생할 수 있기 때문에 정상적으로 처리하는 것이 너무나도 중요하다.
+- mouse click
+- keyboard
+- resizing window
+- page loading
+- form submission
+- video is being played
+- error
+
+[Events 개념](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events "Events 개념")
+[Events 종류](https://developer.mozilla.org/en-US/docs/Web/Events "Events 종류")
+
+```javascript
+$0.addEventListener('click'=> { //addEventListner = > 내가 등록한 함수를 호출해줘
+  console.log("clicked");
+});
+```
+
+```javascript
+const listener = () => {
+  console.log("clicked");
+};
+$0.addEventListner("click", listener);
+$0.removeEventListener("click", listener);
+```
+
+---
+
+# 2. What's React?
+
+---
+
+### 2.1 리액트를 배워야 하는 이유
 
 -
 -
 -
-- ![RenderTree](/imgs/rendering.png)
+-
 
 :sparkles: 이번 챕터의 핵심 :sparkles:
 
->
-
-```html
-
-```
+> `인라인 코드`
 
 ```javascript
 function test() {
@@ -522,16 +550,7 @@ function test() {
 }
 ```
 
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
+- ![RenderTree](/imgs/rendering.png)
+- [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
 
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
-[Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
+---

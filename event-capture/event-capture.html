@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="outer">
+      <div class="middle">
+        <button>Click Me</button>
+      </div>
+    </div>
+    <script>
+      const outer = document.querySelector(".outer");
+      const middle = document.querySelector(".middle");
+      const button = document.querySelector("button");
+
+      outer.addEventListener("click", () => {
+        console.log(`outer: ${event.currentTarget}, ${event.target}`);
+      });
+      middle.addEventListener("click", () => {
+        console.log(`middle: ${event.currnetTarget}, ${event.target}`);
+      });
+      button.addEventListener("click", () => {
+        console.log(`button: ${event.currentTarget}, ${event.target}`);
+      });
+    </script>
+  </body>
+</html>
