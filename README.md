@@ -495,6 +495,85 @@ section.insertBefore(h2, h3);
 
 ---
 
+# 5. DOM 완전정복 실전 - 쇼핑목록앱
+
+---
+
+### 5.1 쇼핑목록 앱 - HTML 마크업
+
+- 협업에서 프로젝트를 할때 실제론 Vue나 React나 Angular를 이용해서 코드를 작성하므로 HTML 순수 마크업을 하는 일은 거의 없지만 **라이브러리, 프레임워크를 사용한다고 기본적인 것을 못해선 안된다**.
+- 자바스크립트로 동적인 것을 만들기 이전에 먼저, **static**한 페이지를 먼저 만들어보자.
+
+```html
+<section class="list">
+  <header class="header">Shopping List</header>
+  <ul class="items"></ul>
+  <!--동적으로 만들 부분-->
+  <footer class="footer">
+    <input type="text" class="footer__input" />
+    <button class="footer__button">
+      <i class="fas fa-plus"></i>
+    </button>
+  </footer>
+</section>
+```
+
+- 위에서 `<ul class="items"></ul>`부분은 **사용자가 추가하면 DOM요소를 동적으로 추가**해볼 부분인데, 동적으로 하기 이전에 static하게 만든 것이므로 이후 JS로 작성하고 나면 지워줄 부분임을 참고하자.
+
+```html
+<ul class="items">
+  <li class="item__row">
+    <div class="item">
+      <span class="item__name">Egg</span>
+      <button class="item__delete">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+  </li>
+</ul>
+```
+
+---
+
+### 5.2 쇼핑목록 앱 - CSS스타일링
+
+- paddig이나 border사이즈가 width, height에 포함될 수 있도록 box-sizing을 해준다.
+-
+-
+-
+
+:sparkles: 이번 챕터의 핵심 :sparkles:
+
+> `인라인 코드`
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+- ![RenderTree](/imgs/rendering.png)
+- [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
+
+---
+
+:sparkles: 이번 챕터의 핵심 :sparkles:
+
+> `인라인 코드`
+
+```javascript
+function test() {
+  console.log("hello world!");
+}
+```
+
+- ![RenderTree](/imgs/rendering.png)
+- [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
+
+---
+
+---
+
 # Events
 
 ---
