@@ -535,16 +535,127 @@ section.insertBefore(h2, h3);
 
 ---
 
-### 5.2 쇼핑목록 앱 - CSS스타일링
-
-- paddig이나 border사이즈가 width, height에 포함될 수 있도록 box-sizing을 해준다.
--
--
--
+### 5.2 쇼핑목록 앱 - CSS스타일링 + Javascript동적기능
 
 :sparkles: 이번 챕터의 핵심 :sparkles:
 
-> `인라인 코드`
+> `createItem`
+
+- paddig이나 border사이즈가 width, height에 포함될 수 있도록 box-sizing을 해준다.
+
+```css
+* {
+  box-sizing: border-box;
+}
+```
+
+- JS를 이용해 **동적으로 아이템 추가/삭제**까지 해보자.
+- 시작에 들어가기 전에 **내가 구현할 것이 무엇인지 "정확하게 계획"하는 것이 중요하다.**
+
+  - 사용자가 `footer__input`에 타이핑하게 하는것.
+  - 사용자가 `footer__plus`버튼을 클릭하면 `item__row`에 등록되게 하는 것.(아이템 추가방법은 두가지)
+    - 첫째, `footer__plus`버튼을 클릭해서 추가하는 방법
+    - 둘째, 텍스트에서 `enterkey`를 치면 등록하게 하는 방법
+  - 사용자가 `item__delete`버튼을 클릭하면 `item__row`에서 삭제되는 것.
+
+- 필요한 DOM요소들을 정의해보자.
+
+```javascript
+const items = document.querySelector(".items");
+const input = document.querySelector(".footer__input");
+const addBtn = document.querySelector(".footer__button");
+```
+
+- 사용할 DOM요소들을 정의했으니 **함수를 등록하자.**
+- add button을 눌렀을때 이벤트처리하는 함수는 보통 `on`을 많이 붙인다. => `onClick`, `onAdd`, `onDelete`
+- 내가 addBtn으로 DOM요소 등록을 했으므로, onAdd 함수를 등록시킨다.
+
+```javascript
+function onAdd() {}
+```
+
+- 내가 등록할 함수의 **로직을 작성**한다.
+
+```javascript
+function onAdd() {
+  // 1. 사용자가 입력한 input text를 받는다.
+  // 2. 새로운 아이템을 만들어낸다. => 사용자가 입력했던 텍스트 + 삭제 버튼
+  // 3. items 컨테이너 안에 새로 만든 아이템을 추가한다.
+  // 4. 사용자가 입력했던 input을 초기화 + 마우스 포커스 해놓는다.
+}
+```
+
+- onAdd(plus버튼)핸들링 작성
+
+```javascript
+//addBtn을 클릭하면 onAdd함수를 콜백(호출)한다.
+addBtn.addEventListenter("click", () => {
+  onAdd();
+});
+```
+
+- 1번인 **"1. 사용자가 입력한 input text를 받는다."**를 작성해보자.
+
+```javascript
+const text = input.value;
+console.log(text); //항상 console.log로 확인하면서 하자.
+```
+
+- 2번인 **"2. 새로운 아이템을 만들어낸다. => 사용자가 입력했던 텍스트 + 삭제 버튼"**을 작성해보자.
+
+```javascript
+function addAdd(){
+  const item = createItem(text);
+  ...
+}
+
+function createItem(text) {
+  const itemRow = document.createElement("li");
+  itemRow.setAttribute("class", "item__row");
+
+  const item = document.createElement("div");
+  item.setAttribute("class", "item");
+
+  const name = document.createElement("span");
+  name.setAttribute("class", "item__name");
+  name.innerText = text;
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.setAttribute("class", "item__delete");
+  deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+  deleteBtn.addEventListener("click", () => {
+    items.removeChild(itemRow);
+  });
+
+  const itemDivider = document.createElement("div");
+  itemDivider.setAttribute("class", "item__divider");
+
+  //아이템에 span과 delete버튼을 넣어줘야한다.
+  item.appendChild(name);
+  item.appendChild(deleteBtn);
+
+  itemRow.appendChild(item);
+  itemRow.appendChild(itemDivider);
+  return itemRow;
+}
+
+```
+
+- 3번인 **"3. items 컨테이너 안에 새로 만든 아이템을 추가한다."**를 작성해보자.
+
+```javascript
+items.appendChild(item);
+```
+
+- 4번인 **"사용자가 입력했던 input을 초기화 + 마우스 포커스 해놓는다."**를 작성해보자.
+
+```javascript
+input.value = "";
+```
+
+:sparkles: 이번 챕터의 핵심 :sparkles:
+
+> `createItem`
 
 ```javascript
 function test() {
