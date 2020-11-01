@@ -749,6 +749,8 @@ outer.addEventListener("click", () => {
 });
 ```
 
+[Event_bubbling_and_capture](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#Event_bubbling_and_capture "Event_bubbling_and_capture")
+
 ---
 
 # 2. What's React?
