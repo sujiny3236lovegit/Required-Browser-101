@@ -581,7 +581,8 @@ function onAdd() {
   // 1. 사용자가 입력한 input text를 받는다.
   // 2. 새로운 아이템을 만들어낸다. => 사용자가 입력했던 텍스트 + 삭제 버튼
   // 3. items 컨테이너 안에 새로 만든 아이템을 추가한다.
-  // 4. 사용자가 입력했던 input을 초기화 + 마우스 포커스 해놓는다.
+  // 4. 새롭게 추가된 아이템으로 스크롤링 시킨다.
+  // 5. 사용자가 입력했던 input을 초기화 + 마우스 포커스 해놓는다.
 }
 ```
 
@@ -599,6 +600,11 @@ addBtn.addEventListenter("click", () => {
 ```javascript
 const text = input.value;
 console.log(text); //항상 console.log로 확인하면서 하자.
+//사용자가 아무것도 입력하지 않았다면, 마우스focus를 주고 그냥 나간다(리턴한다.)
+if (text === "") {
+  input.focus();
+  return;
+}
 ```
 
 - 2번인 **"2. 새로운 아이템을 만들어낸다. => 사용자가 입력했던 텍스트 + 삭제 버튼"**을 작성해보자.
@@ -647,39 +653,23 @@ function createItem(text) {
 items.appendChild(item);
 ```
 
-- 4번인 **"사용자가 입력했던 input을 초기화 + 마우스 포커스 해놓는다."**를 작성해보자.
+- 4번인 **"4. 새롭게 추가된 아이템으로 스크롤링 시킨다."**를 작성해보자.
+
+```javascript
+item.scrollIntoView({ block: "center" });
+```
+
+- 5번인 **"5. 사용자가 입력했던 input을 초기화 + 마우스 포커스 해놓는다."**를 작성해보자.
 
 ```javascript
 input.value = "";
 ```
 
-:sparkles: 이번 챕터의 핵심 :sparkles:
-
-> `createItem`
-
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
-- ![RenderTree](/imgs/rendering.png)
-- [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
-
----
-
-:sparkles: 이번 챕터의 핵심 :sparkles:
-
-> `인라인 코드`
-
-```javascript
-function test() {
-  console.log("hello world!");
-}
-```
-
-- ![RenderTree](/imgs/rendering.png)
-- [Box model](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing "Box model")
+> "협업에서 주석을 작성할 때의 주의점"
+> 주석 작성시, 공부할때처럼 설명을 작성하면 가독성이 떨어진다.
+> 따라서 주석은 - 이 함수는 무엇이며(어떤 함수이며) - 어떤 의도로 만들어 졌으며 - 어떻게 사용해야 하며 - 왜 만들어 졌는지 .....
+> 를 설명할 때만 작성한다.
+> "왜"를 설명할 때만 사용하는것이 주석이다.
 
 ---
 
@@ -691,17 +681,26 @@ function test() {
 
 ### 6.1 Events
 
-- 브라우저에서 이벤트는 여기저기서 발생할 수 있기 때문에 정상적으로 처리하는 것이 너무나도 중요하다.
-- mouse click
-- keyboard
-- resizing window
-- page loading
-- form submission
-- video is being played
-- error
+- 브라우저를 이야기할 때 이벤트를 빼놓고 이야기 할 수 없다.
+- 이벤트는 브라우저 안에서 이곳 저곳 발생하므로 정상적인 처리가 매우 중요하다.
+- 이벤트가 무엇이며, 이벤트 안에 어떤 내용이 있으며, 이벤트를 처리함에 어떤 것을 유의해야 하는지 알아보자.
 
-[Events 개념](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events "Events 개념")
-[Events 종류](https://developer.mozilla.org/en-US/docs/Web/Events "Events 종류")
+  - mouse click: 사용자 클릭
+  - mouse click: 사용자 클릭
+  - keyboard: 사용자 키보드
+  - resizing window: 윈도우창 크기 변경
+  - close window: 윈도우가 꺼졌을때
+  - page loading: 페이지 로딩
+  - form submission: 사용자가 입력한 내용을 제출할때
+  - video is being played: 비디오, 미디어들이 재생, 중지될때
+  - error: 에러발생
+  - ...
+
+- 이렇게 많은 event가 존재하는데 내가 모두 Handling하진 않는다.
+- 그저 내가 원하거나 handling하고 싶은 부분에만 event를 처리한다.
+- 그러기 위해 내가 특정한 요소에 **이벤트 핸들러**를 등록하게 된다.
+
+  > Event Handler: 어느 부분이 클릭됐고, 어느 요소가 클릭되었는지 등 다양한 정보를 가진 이벤트 오브젝트를, 내가 등록한 콜백함수에 전달한다.
 
 ```javascript
 $0.addEventListener('click'=> { //addEventListner = > 내가 등록한 함수를 호출해줘
@@ -709,12 +708,45 @@ $0.addEventListener('click'=> { //addEventListner = > 내가 등록한 함수를
 });
 ```
 
+- `EventTarget.addEventListener()`: 이벤트 추가
+- `EventTarget.removeEventListener()`: 이벤트 제거
+- `EventTarget.dispatchEvent()`: **인공**적으로 이벤트 발생(전달)
+
 ```javascript
 const listener = () => {
   console.log("clicked");
 };
 $0.addEventListner("click", listener);
-$0.removeEventListener("click", listener);
+$0.removeEventListner("click", listener);
+```
+
+[Events 개념](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events "Events 개념")
+[Events 종류](https://developer.mozilla.org/en-US/docs/Web/Events "Events 종류")
+
+---
+
+### Bubbling & Capturing
+
+- 브라우저에서 이벤트를 처리하는 **bubbling과 capturing**에 대해서 알아보자.
+
+  > 버블링(bubbling)
+  > 한 요소에서 이벤트가 발생하면, 이 요소에 할당된 핸들러가 동작하는데 곧 이어 부모의 요소의 핸들러까지도 동작하게 되면서 최상단의 부모 요소까지 할당된 핸들러가 반복되는 것
+  > 즉, 이벤트 버블링은 이벤트가 가장 깊은 곳에 있는 요소에서부터 부모요소를 거슬러 올라가며 발생하는 것을 의미한다.
+  > ![RenderTree](/imgs/bubbling.png)
+  > :
+  > `event.target`: 실제 이벤트가 시작된 타깃 요소로, 버블링이 진행되도 변하지 않음.
+  > `this` 혹은 `event.currentTarget`: **현재**요소로, 현재 실행중인 핸들러가 할당된 요소를 참조함.
+
+- 그렇다면 **버블링 이벤트를 중단**시킬 수도 있는가?
+- `event.stopPropagation();`, `event.stopImmediatePropagation();`를 사용해서 버블링을 중단하기도 한다. 하지만 **버블링은 유용하다.** 버블링을 꼭! 멈춰야하는 명백한 상황이 아니라면 버블링은 디버깅을 불러올 뿐이다. 따라서 사용하지 않고 아래와 같은 코드를 작성하 등 다른 코드들로 방지한다.
+
+```javascript
+outer.addEventListener("click", () => {
+  if (event.target !== event.currentTarget) {
+    return;
+  }
+  console.log(`outer: ${event.currentTarget}, ${event.target}`);
+});
 ```
 
 ---

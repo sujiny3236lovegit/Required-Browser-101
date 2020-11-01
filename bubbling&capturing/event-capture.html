@@ -17,13 +17,24 @@
       const button = document.querySelector("button");
 
       outer.addEventListener("click", () => {
+        if (event.target !== event.currentTarget) {
+          return;
+        }
         console.log(`outer: ${event.currentTarget}, ${event.target}`);
       });
       middle.addEventListener("click", () => {
-        console.log(`middle: ${event.currnetTarget}, ${event.target}`);
+        if (event.target !== event.currentTarget) {
+          return;
+        }
+        console.log(`middle: ${event.currentTarget}, ${event.target}`);
       });
       button.addEventListener("click", () => {
-        console.log(`button: ${event.currentTarget}, ${event.target}`);
+        console.log(`button1: ${event.currentTarget}, ${event.target}`);
+        // event.stopPropagation();
+      });
+      button.addEventListener("click", () => {
+        console.log(`button2: ${event.currentTarget}, ${event.target}`);
+        // event.stopImmediatePropagation();
       });
     </script>
   </body>

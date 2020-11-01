@@ -14,7 +14,9 @@ function onAdd() {
   const item = createItem(text);
   // 3. items 컨테이너 안에 새로 만든 아이템을 추가한다.
   items.appendChild(item);
-  // 4. 사용자가 입력했던 input을 초기화 + 마우스 포커스 해놓는다.
+  // 4. 새롭게 추가된 아이템으로 스크롤링 시킨다.
+  item.scrollIntoView({ block: "center" });
+  // 5. 사용자가 입력했던 input을 초기화 + 마우스 포커스 해놓는다.
   input.value = "";
   input.focus();
 }
@@ -55,4 +57,8 @@ addBtn.addEventListener("click", () => {
 });
 
 // 사용자가 input에서 keypress를 누르면 아이템을 등록하자.
-input.addEventListener("keypress", (event) => {});
+input.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    onAdd();
+  }
+});
