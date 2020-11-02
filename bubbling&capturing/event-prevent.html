@@ -26,15 +26,16 @@
     <div></div>
     <div></div>
     <div></div>
+    <div></div>
     <script>
-      document.addEventListener('wheel', event => {
-        console.log('scrolling');
+      document.addEventListener("wheel", (event) => {
+        console.log("scrolling");
         event.preventDefault();
       });
-      const checkbox = document.querySelector('input');
-      checkbox.addEventListener('click', event => {
+      const checkbox = document.querySelector("input");
+      checkbox.addEventListener("click", (event) => {
         // long
-        console.log('checked');
+        console.log("checked");
         event.preventDefault();
       });
     </script>

@@ -725,7 +725,7 @@ $0.removeEventListner("click", listener);
 
 ---
 
-### Bubbling & Capturing
+### 6.2 Bubbling & Capturing
 
 - 브라우저에서 이벤트를 처리하는 **bubbling과 capturing**에 대해서 알아보자.
 
@@ -751,6 +751,45 @@ outer.addEventListener("click", () => {
 
 [Event_bubbling_and_capture](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#Event_bubbling_and_capture "Event_bubbling_and_capture")
 
+---
+
+### 6.3 브라우저 기본 기능 취소하기 + 유의할 점 
+
+- **브라우저의 기본 기능을 취소하는 법**을 배워보자.
+```javascript
+
+```
+
+---
+
+### 6.4 이벤트 위임(event delegation)
+
+- 이벤트 위임(event delegation)에 따라 내가 조금 쿨하게 보있수도 있다.
+- 이벤트 델리게이션을 잘 사용하기 위해선 이벤트 버블링을 조금 이해해야한다.
+> 부모 컨테이너는 '어느 자식 요소에서 이벤트가 발생하든' **모든 이벤트를 다 들을 수 있다.**
+
+- **클릭이 될 때마다 백그라운드 색깔을 옐로우로 변경해보자.**
+```javascript
+//Bad
+const lis = document.querySelectorAll("li");
+lis.forEach(li=>{
+  li.addEventListener('click', () => {
+    li.classList.add('selected');
+  });
+});
+```
+
+```javascript
+//Good
+const ul = document.querySelector('ul');
+ul.addEventListener('click', event => {
+  if (event.target.tagName == 'LI') {
+    event.target.classList.add('selected');
+  }
+});
+```
+- 이렇게 반복되어지는 클릭을 처리할 때 즉, **부모 안에 있는 자식들에게 공통적으로 처리할때**에는 eventListener를 일일이 자식 노드에 이벤트를 추가하는 것보다 **부모에 이벤트를 추가**하는 것이 좋다. 
+- 또한, event에는 currentTarget과 target이라는 정보가 있기 때문에 '이벤트 델리게이션(event delegation)'을 사용하는 것이 좋다.  
 ---
 
 # 2. What's React?
